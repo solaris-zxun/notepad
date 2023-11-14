@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleek Notepad</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #1e352f;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      height: 100vh;
+    }
+
+    #buttonContainer {
+      display: flex;
+      flex-direction: column;
+      background-color: #1e352f;
+      padding: 20px;
+    }
+
+    .button {
+      background-color: #305965;
+      color: #fff;
+      padding: 10px;
+      margin-bottom: 5px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .button:hover {
+      background-color: #1e352f;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    #editorContainer {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .editable-textarea {
+      width: calc(100% - 40px);
+      height: 100%;
+      resize: both;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+      background-color: #000;
+      color: white; /* Set text color to white */
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="buttonContainer">
+    <button class="button" onclick="showEditor('S1')">S1</button>
+    <button class="button" onclick="showEditor('S2')">S2</button>
+    <button class="button" onclick="showEditor('S3')">S3</button>
+    <button class="button" onclick="showEditor('S4')">S4</button>
+    <button class="button" onclick="showEditor('S5')">S5</button>
+    <button class="button" onclick="showEditor('S6')">S6</button>
+    <button class="button" onclick="showEditor('S7')">S7</button>
+    <button class="button" onclick="showEditor('S8')">S8</button>
+    <button class="button" onclick="showEditor('S9')">S9</button>
+  </div>
+
+  <div id="editorContainer">
+    <textarea id="editorS1" class="editable-textarea" oninput="autoSave('S1')" onkeydown="handleKeyPress(event, 'S1')"></textarea>
+    <textarea id="editorS2" class="editable-textarea" oninput="autoSave('S2')" onkeydown="handleKeyPress(event, 'S2')"></textarea>
+    <textarea id="editorS3" class="editable-textarea" oninput="autoSave('S3')" onkeydown="handleKeyPress(event, 'S3')"></textarea>
+    <textarea id="editorS4" class="editable-textarea" oninput="autoSave('S4')" onkeydown="handleKeyPress(event, 'S4')"></textarea>
+    <textarea id="editorS5" class="editable-textarea" oninput="autoSave('S5')" onkeydown="handleKeyPress(event, 'S5')"></textarea>
+    <textarea id="editorS6" class="editable-textarea" oninput="autoSave('S6')" onkeydown="handleKeyPress(event, 'S6')"></textarea>
+    <textarea id="editorS7" class="editable-textarea" oninput="autoSave('S7')" onkeydown="handleKeyPress(event, 'S7')"></textarea>
+    <textarea id="editorS8" class="editable-textarea" oninput="autoSave('S8')" onkeydown="handleKeyPress(event, 'S8')"></textarea>
+    <textarea id="editorS9" class="editable-textarea" oninput="autoSave('S9')" onkeydown="handleKeyPress(event, 'S9')"></textarea>
+  </div>
+
+  <script>
+    function showEditor(tabName) {
+      // Hide all editors
+      for (let i = 1; i <= 9; i++) {
+        document.getElementById(`editorS${i}`).style.display = 'none';
+      }
+
+      // Show the selected editor
+      document.getElementById(`editor${tabName}`).style.display = 'block';
+
+      // Restore content from localStorage
+      document.getElementById(`editor${tabName}`).value = localStorage.getItem(tabName) || '';
+    }
+
+    function autoSave(tabName) {
+      const content = document.getElementById(`editor${tabName}`).value;
+      localStorage.setItem(tabName, content);
+    }
+
+    function handleKeyPress(event, tabName) {
+      if (event.ctrlKey && event.key === 's') {
+        // Save automatically when pressing Ctrl + S
+        autoSave(tabName);
+        event.preventDefault();
+      }
+    }
+  </script>
+</body>
+</html>
